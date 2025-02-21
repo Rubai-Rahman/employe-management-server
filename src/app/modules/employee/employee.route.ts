@@ -10,6 +10,11 @@ router.post(
   upload.single("profilePicture"),
   EmployeeController.createEmployee,
 );
+router.put(
+  "/:id",
+  upload.single("profilePicture"),
+  EmployeeController.updateEmployee,
+);
 router.get("/", EmployeeController.gettAllEmployes);
 router.get("/:id", EmployeeController.getEmployeById);
 

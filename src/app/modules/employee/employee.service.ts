@@ -21,6 +21,21 @@ const createEmployeeIntoDb = async (employeeData: TEmployee) => {
   const newEmployee = await Employee.create(employeeData);
   return newEmployee;
 };
+const updateEmployeeIntoDb = async (
+  id: string,
+  updateEmployeeData: TEmployee,
+) => {
+  try {
+    const result = await Employee.findOneAndUpdate(
+      { employeeId: parseInt(id) }, // Find by employeeId
+      { $set: updateEmployeeData }, // Update fields
+      { new: true, runValidators: true }, // Return updated document & validate changes
+    );
+    return result;
+  } catch (error) {
+    throw new Error("Error updating employee");
+  }
+};
 
 const getAllEmployeesFromDB = async () => {
   try {
@@ -41,6 +56,7 @@ const getEmployeeByIdFromDB = async (id: string) => {
 
 export const EmployeeService = {
   createEmployeeIntoDb,
+  updateEmployeeIntoDb,
   getAllEmployeesFromDB,
   getEmployeeByIdFromDB,
 };
