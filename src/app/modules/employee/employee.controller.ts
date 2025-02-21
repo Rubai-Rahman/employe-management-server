@@ -62,8 +62,27 @@ const gettAllEmployes = async (req: Request, res: Response) => {
     });
   }
 };
+const getEmployeById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const result = await EmployeeService.getEmployeeByIdFromDB(id);
+
+    res.status(200).json({
+      success: true,
+      message: "Employees fetched successfully",
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      data: error,
+    });
+  }
+};
 
 export const EmployeeController = {
   createEmployee,
   gettAllEmployes,
+  getEmployeById,
 };

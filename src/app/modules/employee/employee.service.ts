@@ -30,8 +30,17 @@ const getAllEmployeesFromDB = async () => {
     throw new Error("Error fetching employees");
   }
 };
+const getEmployeeByIdFromDB = async (id: string) => {
+  try {
+    const result = await Employee.findOne({ employeeId: id });
+    return result;
+  } catch (error) {
+    throw new Error("Error fetching employees");
+  }
+};
 
 export const EmployeeService = {
   createEmployeeIntoDb,
   getAllEmployeesFromDB,
+  getEmployeeByIdFromDB,
 };

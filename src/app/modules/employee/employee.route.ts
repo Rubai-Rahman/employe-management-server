@@ -11,5 +11,6 @@ router.post(
   EmployeeController.createEmployee,
 );
 router.get("/", EmployeeController.gettAllEmployes);
+router.get("/:id", EmployeeController.getEmployeById);
 
 export const UserRoutes = router;
