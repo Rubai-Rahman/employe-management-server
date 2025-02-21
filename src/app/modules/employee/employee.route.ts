@@ -15,8 +15,8 @@ router.put(
   upload.single("profilePicture"),
   EmployeeController.updateEmployee,
 );
-router.get("/", EmployeeController.gettAllEmployes);
-router.get("/:id", EmployeeController.getEmployeById);
+router.get("/", EmployeeController.gettAllEmployees);
+router.get("/:id", EmployeeController.getEmployeeById);
 router.delete("/:id", EmployeeController.deleteEmployee);
 
 export const EmployeeRoutes = router;
