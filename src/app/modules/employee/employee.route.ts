@@ -10,5 +10,6 @@ router.post(
   upload.single("profilePicture"),
   EmployeeController.createEmployee,
 );
+router.get("/", EmployeeController.gettAllEmployes);
 
 export const UserRoutes = router;

@@ -45,6 +45,25 @@ const createEmployee = async (req: Request, res: Response) => {
   }
 };
 
+const gettAllEmployes = async (req: Request, res: Response) => {
+  try {
+    const result = await EmployeeService.getAllEmployeesFromDB();
+
+    res.status(200).json({
+      success: true,
+      message: "Employees fetched successfully",
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      data: error,
+    });
+  }
+};
+
 export const EmployeeController = {
   createEmployee,
+  gettAllEmployes,
 };

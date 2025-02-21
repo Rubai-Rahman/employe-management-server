@@ -2,7 +2,6 @@ import { Employee } from "./employee.model";
 import { TEmployee } from "./employee.interface";
 
 const createEmployeeIntoDb = async (employeeData: TEmployee) => {
-  // Check if employee exists using static method
   const existingEmployee = await Employee.isEmployeeExists(
     employeeData.employeeId,
   );
@@ -10,7 +9,6 @@ const createEmployeeIntoDb = async (employeeData: TEmployee) => {
     throw new Error("Employee with this ID already exists");
   }
 
-  // Check if email/username exists using static method
   const existingEmailOrUsername = await Employee.isEmailUserNameExists(
     employeeData.fullName.firstName,
     employeeData.email,
@@ -24,6 +22,16 @@ const createEmployeeIntoDb = async (employeeData: TEmployee) => {
   return newEmployee;
 };
 
+const getAllEmployeesFromDB = async () => {
+  try {
+    const result = await Employee.find();
+    return result;
+  } catch (error) {
+    throw new Error("Error fetching employees");
+  }
+};
+
 export const EmployeeService = {
   createEmployeeIntoDb,
+  getAllEmployeesFromDB,
 };
