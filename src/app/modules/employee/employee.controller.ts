@@ -2,11 +2,11 @@ import { Request, Response } from "express";
 import { EmployeeService } from "./employee.service";
 import { EmployeeValidationSchema } from "./employee.validation";
 import { z } from "zod";
+import { v2 as cloudinary } from "cloudinary";
 
 const createEmployee = async (req: Request, res: Response) => {
+  console.log("file", req.file);
   try {
-    // Validate the incoming request body using Zod
-    // Manually parse fullName and address if they exist
     if (req.body.fullName) req.body.fullName = JSON.parse(req.body.fullName);
     if (req.body.address) req.body.address = JSON.parse(req.body.address);
     const validatedData = EmployeeValidationSchema.parse(req.body);
@@ -22,6 +22,11 @@ const createEmployee = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
+    if (req.file) {
+      const publicId = req.file.filename;
+      await cloudinary.uploader.destroy(publicId);
+    }
+
     // If validation fails, Zod will throw an error that includes details
     if (error instanceof z.ZodError) {
       res.status(400).json({
