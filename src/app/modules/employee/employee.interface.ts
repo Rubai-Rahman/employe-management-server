@@ -23,13 +23,11 @@ export interface TEmployee {
 }
 
 // 🔹 Define Static Methods Type
-export interface EmployeeStatics {
+// Add static methods to the model interface
+export interface EmployeeModel extends Model<TEmployee> {
   isEmployeeExists(employeeId: number): Promise<TEmployee | null>;
   isEmailUserNameExists(
     username: string,
     email: string,
   ): Promise<TEmployee | null>;
 }
-
-// 🔹 Define the Model Type (with Static Methods)
-export type EmployeeModel = Model<TEmployee, {}, EmployeeStatics>;
