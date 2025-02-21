@@ -6,7 +6,7 @@ const router = express.Router();
 
 // Use `upload.single("profilePicture")` to handle one image upload under that field name.
 router.post(
-  "/",
+  "/create-employee",
   upload.single("profilePicture"),
   EmployeeController.createEmployee,
 );
