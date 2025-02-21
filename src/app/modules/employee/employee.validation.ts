@@ -19,7 +19,7 @@ export const AddressValidationSchema = z.object({
 
 // Define the main Employee schema using the sub-schemas
 const EmployeeValidationSchema = z.object({
-  employeeId: z.number({ required_error: "Employee ID is required" }),
+  employeeId: z.coerce.number({ required_error: "Employee ID is required" }),
   fullName: NameValidationSchema,
   phone: z
     .string({ required_error: "Phone number is required" })
@@ -27,7 +27,7 @@ const EmployeeValidationSchema = z.object({
   email: z
     .string({ required_error: "Email is required" })
     .email("Invalid email address"),
-  address: AddressValidationSchema.optional(),
+  address: AddressValidationSchema,
   department: z.string({ required_error: "Department is required" }),
   status: z.enum(["active", "inactive"]).optional(),
   profilePicture: z.string().optional(), // URL from Cloudinary
