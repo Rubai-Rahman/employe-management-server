@@ -17,5 +17,6 @@ router.put(
 );
 router.get("/", EmployeeController.gettAllEmployes);
 router.get("/:id", EmployeeController.getEmployeById);
+router.delete("/:id", EmployeeController.deleteEmployee);
 
-export const UserRoutes = router;
+export const EmployeeRoutes = router;

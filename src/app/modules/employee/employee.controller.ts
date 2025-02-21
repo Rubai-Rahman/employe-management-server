@@ -14,7 +14,7 @@ const createEmployee = async (req: Request, res: Response) => {
       validatedData.profilePicture = req.file.path;
     }
     // Call the service layer to create the employee record
-    const result = await EmployeeService.createEmployeeIntoDb(validatedData);
+    const result = await EmployeeService.createEmployeeIntoDB(validatedData);
     res.status(201).json({
       success: true,
       message: "Employee is created sucessfully",
@@ -54,7 +54,7 @@ const updateEmployee = async (req: Request, res: Response) => {
       validatedData.profilePicture = req.file.path;
     }
     // Call the service layer to create the employee record
-    const result = await EmployeeService.updateEmployeeIntoDb(
+    const result = await EmployeeService.updateEmployeeIntoDB(
       id,
       validatedData,
     );
@@ -123,9 +123,29 @@ const getEmployeById = async (req: Request, res: Response) => {
   }
 };
 
+const deleteEmployee = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const result = await EmployeeService.deleteEmployeeFromDB(id);
+
+    res.status(200).json({
+      success: true,
+      message: "Employee deleted successfully",
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error instanceof Error ? error.message : "Something went wrong",
+      error: error instanceof Error ? error : "Unknown error",
+    });
+  }
+};
+
 export const EmployeeController = {
   createEmployee,
   updateEmployee,
   gettAllEmployes,
   getEmployeById,
+  deleteEmployee,
 };

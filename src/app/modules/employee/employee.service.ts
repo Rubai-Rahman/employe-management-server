@@ -1,7 +1,8 @@
 import { Employee } from "./employee.model";
 import { TEmployee } from "./employee.interface";
+import { v2 as cloudinary } from "cloudinary";
 
-const createEmployeeIntoDb = async (employeeData: TEmployee) => {
+const createEmployeeIntoDB = async (employeeData: TEmployee) => {
   const existingEmployee = await Employee.isEmployeeExists(
     employeeData.employeeId,
   );
@@ -21,7 +22,7 @@ const createEmployeeIntoDb = async (employeeData: TEmployee) => {
   const newEmployee = await Employee.create(employeeData);
   return newEmployee;
 };
-const updateEmployeeIntoDb = async (
+const updateEmployeeIntoDB = async (
   id: string,
   updateEmployeeData: TEmployee,
 ) => {
@@ -54,9 +55,30 @@ const getEmployeeByIdFromDB = async (id: string) => {
   }
 };
 
+const deleteEmployeeFromDB = async (id: string) => {
+  try {
+    const employee = await Employee.findOne({ employeeId: parseInt(id) });
+
+    if (!employee) {
+      return null; // Employee not found
+    }
+
+    // Delete profile picture from Cloudinary
+    if (employee.profilePicture) {
+      const publicId = employee.profilePicture.split("/").pop()?.split(".")[0]; // Extract public_id from URL
+      await cloudinary.uploader.destroy(`employees/${publicId}`);
+    }
+    await Employee.findOneAndDelete({ employeeId: parseInt(id) });
+
+    return true;
+  } catch (error) {
+    throw new Error("Error deleting employee");
+  }
+};
 export const EmployeeService = {
-  createEmployeeIntoDb,
-  updateEmployeeIntoDb,
+  createEmployeeIntoDB,
+  updateEmployeeIntoDB,
   getAllEmployeesFromDB,
   getEmployeeByIdFromDB,
+  deleteEmployeeFromDB,
 };
