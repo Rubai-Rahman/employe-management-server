@@ -87,7 +87,7 @@ const updateEmployee = async (req: Request, res: Response) => {
   }
 };
 
-const gettAllEmployes = async (req: Request, res: Response) => {
+const gettAllEmployees = async (req: Request, res: Response) => {
   try {
     const result = await EmployeeService.getAllEmployeesFromDB();
 
@@ -104,7 +104,7 @@ const gettAllEmployes = async (req: Request, res: Response) => {
     });
   }
 };
-const getEmployeById = async (req: Request, res: Response) => {
+const getEmployeeById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const result = await EmployeeService.getEmployeeByIdFromDB(id);
@@ -145,7 +145,7 @@ const deleteEmployee = async (req: Request, res: Response) => {
 export const EmployeeController = {
   createEmployee,
   updateEmployee,
-  gettAllEmployes,
-  getEmployeById,
+  gettAllEmployees,
+  getEmployeeById,
   deleteEmployee,
 };

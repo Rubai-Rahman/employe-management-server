@@ -29,5 +29,6 @@ export interface EmployeeModel extends Model<TEmployee> {
   isEmailUserNameExists(
     username: string,
     email: string,
+    phone: string,
   ): Promise<TEmployee | null>;
 }

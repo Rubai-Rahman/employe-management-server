@@ -79,12 +79,14 @@ EmployeeSchema.statics.isEmployeeExists = async function (employeeId: number) {
 EmployeeSchema.statics.isEmailUserNameExists = async function (
   username: string,
   email: string,
+  phone: string,
 ) {
   return await this.findOne({
     $or: [
       { "fullName.firstName": username },
       { "fullName.lastName": username },
       { email },
+      { phone },
     ],
   }).lean();
 };

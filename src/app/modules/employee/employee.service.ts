@@ -13,9 +13,10 @@ const createEmployeeIntoDB = async (employeeData: TEmployee) => {
   const existingEmailOrUsername = await Employee.isEmailUserNameExists(
     employeeData.fullName.firstName,
     employeeData.email,
+    employeeData.phone,
   );
   if (existingEmailOrUsername) {
-    throw new Error("Email or username already exists");
+    throw new Error("Email Phone or username already exists");
   }
 
   // Create new employee
