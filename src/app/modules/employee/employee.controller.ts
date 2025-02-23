@@ -6,8 +6,8 @@ import { v2 as cloudinary } from "cloudinary";
 
 const createEmployee = async (req: Request, res: Response) => {
   try {
-    if (req.body.fullName) req.body.fullName = JSON.parse(req.body.fullName);
-    if (req.body.address) req.body.address = JSON.parse(req.body.address);
+    // if (req.body.fullName) req.body.fullName = JSON.parse(req.body.fullName);
+    // if (req.body.address) req.body.address = JSON.parse(req.body.address);
     const validatedData = EmployeeValidationSchema.parse(req.body);
 
     if (req.file) {
