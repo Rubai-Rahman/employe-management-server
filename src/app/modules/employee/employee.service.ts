@@ -39,14 +39,30 @@ const updateEmployeeIntoDB = async (
   }
 };
 
-const getAllEmployeesFromDB = async () => {
+const getAllEmployeesFromDB = async (search: string, filter: string) => {
   try {
-    const result = await Employee.find();
+    let query: any = {};
+
+    if (search) {
+      query.$or = [
+        { "fullName.firstName": { $regex: search, $options: "i" } },
+        { "fullName.lastName": { $regex: search, $options: "i" } },
+        { email: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    if (filter && filter.trim() !== "") {
+      query.$or = query.$or || [];
+      query.$or.push({ department: filter }, { status: filter });
+    }
+
+    const result = await Employee.find(query);
     return result;
   } catch (error) {
     throw new Error("Error fetching employees");
   }
 };
+
 const getEmployeeByIdFromDB = async (id: string) => {
   try {
     const result = await Employee.findOne({ employeeId: id });

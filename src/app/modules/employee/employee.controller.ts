@@ -6,8 +6,6 @@ import { v2 as cloudinary } from "cloudinary";
 
 const createEmployee = async (req: Request, res: Response) => {
   try {
-    // if (req.body.fullName) req.body.fullName = JSON.parse(req.body.fullName);
-    // if (req.body.address) req.body.address = JSON.parse(req.body.address);
     const validatedData = EmployeeValidationSchema.parse(req.body);
 
     if (req.file) {
@@ -46,14 +44,11 @@ const createEmployee = async (req: Request, res: Response) => {
 const updateEmployee = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    if (req.body.fullName) req.body.fullName = JSON.parse(req.body.fullName);
-    if (req.body.address) req.body.address = JSON.parse(req.body.address);
     const validatedData = EmployeeValidationSchema.parse(req.body);
 
     if (req.file) {
       validatedData.profilePicture = req.file.path;
     }
-    // Call the service layer to create the employee record
     const result = await EmployeeService.updateEmployeeIntoDB(
       id,
       validatedData,
@@ -88,8 +83,12 @@ const updateEmployee = async (req: Request, res: Response) => {
 };
 
 const gettAllEmployees = async (req: Request, res: Response) => {
+  const { search, filter } = req.query;
   try {
-    const result = await EmployeeService.getAllEmployeesFromDB();
+    const result = await EmployeeService.getAllEmployeesFromDB(
+      search as string,
+      filter as string,
+    );
 
     res.status(200).json({
       success: true,
