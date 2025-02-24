@@ -4,7 +4,7 @@ import { EmployeeRoutes } from "./app/modules/employee/employee.route";
 
 const app: Application = express();
 //parser
-app.use(express.json());
+app.use(express.json({ limit: "20mb" }));
 app.use(cors());
 
 //application routes
